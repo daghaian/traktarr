@@ -483,7 +483,8 @@ def movies(list_type, add_limit=0, add_delay=2.5, sort='votes', rating=0, genre=
                 if(rating and cfg['omdb']['api_key'] != ''):
                     movieRating = rating_helper.get_rating(cfg['omdb']['api_key'],movie['movie']['ids']['imdb'])
                     if(movieRating == -1):
-                        raise Exception
+                        log.debug("Skipping: %s because it did not have a rating/lacked imdbID",movie['movie']['title'])
+                        continue
                 if(not movieRating or movieRating >= rating):
                     log.info("Adding: %s (%d) | Genres: %s | Country: %s", movie['movie']['title'],
                              movie['movie']['year'],
